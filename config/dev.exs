@@ -21,7 +21,9 @@ config :userx, UserxWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
-  debug_errors: true,
+  # debug_errors: true,
+  debug_errors: false,
+  render_errors: [view: UserxWeb.ErrorView, accepts: ~w(json), layout: false],
   secret_key_base: "iDfI+mXULUmnYvbN2To+5hBK9YMEQnjrMpQqwiivn7QOYr5Pnus4eVv11YXaPV02",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
