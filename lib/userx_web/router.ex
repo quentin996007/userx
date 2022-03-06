@@ -21,9 +21,10 @@ defmodule UserxWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", UserxWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", UserxWeb do
+    pipe_through :api
+    resources "/users", UserController, except: [:new, :edit]
+  end
 
   # Enables LiveDashboard only for development
   #

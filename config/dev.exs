@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :userx, Userx.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "quentin",
   hostname: "localhost",
   database: "userx_dev",
   show_sensitive_data_on_connection_error: true,
