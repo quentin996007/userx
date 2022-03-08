@@ -55,6 +55,12 @@ defmodule Userx.Accounts do
     |> Repo.insert()
   end
 
+  def sign_up_user(attrs \\ %{}) do
+    %User{}
+    |> User.changeset_password(attrs)
+    |> Repo.insert()
+  end
+
   @doc """
   Updates a user.
 

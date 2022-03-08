@@ -24,6 +24,8 @@ defmodule UserxWeb.Router do
   scope "/api", UserxWeb do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
+    post "/sign_up", SessionController, :sign_up
+    post "/sign_in", SessionController, :sign_in
   end
 
   # Enables LiveDashboard only for development

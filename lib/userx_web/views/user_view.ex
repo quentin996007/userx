@@ -15,7 +15,6 @@ defmodule UserxWeb.UserView do
       id: user.id,
       name: user.name,
       age: user.age,
-      hash_password: user.hash_password,
       account: user.account,
       bio: user.bio
     }
