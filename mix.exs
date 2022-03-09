@@ -50,7 +50,9 @@ defmodule Userx.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       # 加密
-      {:pbkdf2_elixir, "~> 2.0"}
+      {:pbkdf2_elixir, "~> 2.0"},
+      # 检测性能问题
+      {:flame_on, "~> 0.3.0"}
     ]
   end
 

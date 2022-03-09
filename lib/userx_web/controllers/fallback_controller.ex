@@ -21,13 +21,4 @@ defmodule UserxWeb.FallbackController do
     |> put_view(UserxWeb.ErrorView)
     |> render(:"404")
   end
-
-  def call(conn, {:error, :not_found_data}) do
-    IO.puts("数据找不到: #{:not_found_data}")
-
-    conn
-    |> put_status(200)
-    |> put_view(UserxWeb.ErrorView)
-    |> render("not_found_data.json")
-  end
 end

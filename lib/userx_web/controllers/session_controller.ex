@@ -12,7 +12,22 @@ defmodule UserxWeb.SessionController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render(UserxWeb.UserView, "show.json", user: user)
+      |> put_view(UserxWeb.UserView)
+      |> render("show.json", user: user)
+    end
+  end
+
+  def sign_in(conn, %{"user" => %{"account" => account, "password" => password}}) do
+    case Accounts.sign_in_user(account, password) do
+      %User{} = user ->
+        conn
+        |> put_status(:ok)
+        |> put_resp_header("location", Routes.user_path(conn, :show, user))
+        |> put_view(UserxWeb.UserView)
+        |> render("show.json", user: user)
+
+      _ ->
+        {:error, :sign_in_error}
     end
   end
 end

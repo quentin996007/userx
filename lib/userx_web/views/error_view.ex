@@ -21,13 +21,6 @@ defmodule UserxWeb.ErrorView do
     }
   end
 
-  def render("not_found_data.json", _assigns) do
-    %{
-      code: 404,
-      message: "not_found_data.json!!!"
-    }
-  end
-
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.html" becomes
   # "Not Found".

@@ -40,4 +40,8 @@ defmodule UserxWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def test(conn, _params) do
+    text(conn, "测试")
+  end
 end

@@ -61,6 +61,15 @@ defmodule Userx.Accounts do
     |> Repo.insert()
   end
 
+  def sign_in_user(account, password) do
+    with user when not is_nil(user) <- Repo.get_by(User, %{account: account}),
+         true <- Honeypot.Encrypt.verify_with_hash(password, user.hash_password) do
+      user
+    else
+      _ -> Honeypot.Encrypt.dummy_verfy()
+    end
+  end
+
   @doc """
   Updates a user.
 

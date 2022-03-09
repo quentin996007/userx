@@ -24,6 +24,7 @@ defmodule UserxWeb.Router do
   scope "/api", UserxWeb do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
+    post "/test", UserController, :test
     post "/sign_up", SessionController, :sign_up
     post "/sign_in", SessionController, :sign_in
   end
@@ -41,7 +42,11 @@ defmodule UserxWeb.Router do
     scope "/" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: UserxWeb.Telemetry
+      live_dashboard "/dashboard",
+        metrics: UserxWeb.Telemetry,
+        additional_pages: [
+          flame_on: FlameOn.DashboardPage
+        ]
     end
   end
 
