@@ -1,8 +1,10 @@
 defmodule UserxWeb.SessionController do
   use UserxWeb, :controller
 
+  alias Honeypot.ResponseHandler
   alias Userx.Accounts
   alias Userx.Accounts.User
+
   require Logger
 
   action_fallback UserxWeb.FallbackController
@@ -21,13 +23,13 @@ defmodule UserxWeb.SessionController do
     case Accounts.sign_in_user(account, password) do
       %User{} = user ->
         conn
-        |> put_status(:ok)
-        |> put_resp_header("location", Routes.user_path(conn, :show, user))
-        |> put_view(UserxWeb.UserView)
-        |> render("show.json", user: user)
+        |> ResponseHandler.success(
+          "登录成功",
+          UserxWeb.UserView.render("show.json", user: user)
+        )
 
       _ ->
-        {:error, :sign_in_error}
+        conn |> ResponseHandler.fail("用户名或密码错误")
     end
   end
 end
