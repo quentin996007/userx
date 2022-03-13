@@ -23,7 +23,7 @@ defmodule UserxWeb.FallbackController do
   end
 
   # 处理请求参数错误
-  def call(conn, {:error, errors}) do
+  def call(conn, {:error, %{} = errors}) do
     conn
     |> put_status(:bad_request)
     |> json(errors)

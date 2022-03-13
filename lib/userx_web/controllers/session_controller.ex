@@ -10,15 +10,19 @@ defmodule UserxWeb.SessionController do
   action_fallback UserxWeb.FallbackController
 
   @sign_up_params_schema %{
-    account: [type: :string, required: true, length: [min: 3, max: 20]],
-    age: [type: :integer, numer: [greater_than: 0]],
-    bio: :string,
-    password: [type: :string, required: true, length: [min: 1]],
-    name: :string
+    user: [
+      type: %{
+        account: [type: :string, required: true, length: [min: 3, max: 20]],
+        age: [type: :integer, numer: [greater_than: 0]],
+        bio: :string,
+        password: [type: :string, required: true, length: [min: 1]],
+        name: :string
+      }
+    ]
   }
-  def sign_up(conn, %{"user" => user_params}) do
-    with {:ok, better_params} <- Tarams.cast(user_params, @sign_up_params_schema),
-         {:ok, %User{} = user} <- Accounts.sign_up_user(better_params) do
+  def sign_up(conn, params) do
+    with {:ok, better_params} <- Tarams.cast(params, @sign_up_params_schema),
+         {:ok, %User{} = user} <- Accounts.sign_up_user(better_params.user) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
