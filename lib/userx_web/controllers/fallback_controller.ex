@@ -21,4 +21,11 @@ defmodule UserxWeb.FallbackController do
     |> put_view(UserxWeb.ErrorView)
     |> render(:"404")
   end
+
+  # 处理请求参数错误
+  def call(conn, {:error, errors}) do
+    conn
+    |> put_status(:bad_request)
+    |> json(errors)
+  end
 end
