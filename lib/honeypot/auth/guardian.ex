@@ -2,7 +2,7 @@ defmodule Honeypot.Auth.Guardian do
   use Guardian, otp_app: :userx
 
   @doc """
-  签署生成普通会员JWT，默认过期时间为12周。
+  签署生成普通会员JWT，默认过期时间为12周。超时后再请求，会得到 invalid_token HTTP 401 的错误状态响应。
 
   ## Examples
 
