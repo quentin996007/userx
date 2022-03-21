@@ -2,14 +2,11 @@ defmodule Honeypot.ResponseHandler do
   use UserxWeb, :controller
 
   def success(%Plug.Conn{} = conn, message, data) do
-    response =
-      Map.merge(
-        %{
-          status: 200,
-          message: message
-        },
-        data
-      )
+    response = %{
+      status: 200,
+      message: message,
+      data: data
+    }
 
     conn
     |> put_status(:ok)

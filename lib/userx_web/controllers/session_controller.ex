@@ -37,7 +37,7 @@ defmodule UserxWeb.SessionController do
         conn
         |> ResponseHandler.success(
           "登录成功",
-          Map.merge(UserxWeb.UserView.render("show.json", user: user), %{
+          Map.merge(UserxWeb.UserView.render("user.json", user: user), %{
             jwt: Honeypot.Auth.Guardian.signin_jwt_for_member(user.id)
           })
         )
@@ -45,5 +45,18 @@ defmodule UserxWeb.SessionController do
       _ ->
         conn |> ResponseHandler.fail("用户名或密码错误")
     end
+  end
+
+  def test_auth(conn, _params) do
+    user = Honeypot.Auth.Guardian.current_resource(conn)
+    token = Guardian.Plug.current_token(conn)
+    claims = Guardian.Plug.current_claims(conn)
+
+    conn
+    |> json(%{
+      user: user,
+      token: token,
+      claims: claims
+    })
   end
 end

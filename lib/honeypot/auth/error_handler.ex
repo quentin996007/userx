@@ -4,7 +4,8 @@ defmodule Honeypot.Auth.ErrorHandler do
   @behaviour Guardian.Plug.ErrorHandler
 
   @impl Guardian.Plug.ErrorHandler
-  def auth_error(conn, {type, _reason}, _opts) do
+  def auth_error(conn, {type, _reason} = errors, _opts) do
+    errors |> IO.inspect()
     body = to_string(type)
 
     conn

@@ -17,7 +17,15 @@ defmodule Honeypot.Auth.Guardian do
         token_type: "member"
       )
 
-    token
+    "Bearer " <> token
+  end
+
+  @doc """
+  从当前连接解析 JWT，并返回其中 id 对应的资源
+  """
+  def current_resource(%Plug.Conn{} = conn) do
+    user = Guardian.Plug.current_resource(conn)
+    UserxWeb.UserView.render("user.json", user: user)
   end
 
   def subject_for_token(%{} = sub, _claims) do
@@ -33,12 +41,12 @@ defmodule Honeypot.Auth.Guardian do
     {:error, :reason_for_error}
   end
 
-  def resource_from_claims(%{"sub" => sub}) do
+  def resource_from_claims(%{"sub" => %{"id" => id} = _sub} = _claims) do
     # Here we'll look up our resource from the claims, the subject can be
     # found in the `"sub"` key. In above `subject_for_token/2` we returned
     # the resource id so here we'll rely on that to look it up.
     # resource = MyApp.get_resource_by_id(id)
-    resource = "resource_from_claims:#{sub.id}"
+    resource = Userx.Accounts.get_user!(id)
     {:ok, resource}
   end
 

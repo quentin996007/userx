@@ -14,6 +14,16 @@ defmodule UserxWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Auth Member 管道
+  pipeline :auth_member do
+    plug Honeypot.Auth.MemberPipeline
+  end
+
+  # 必须登录的管道
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/", UserxWeb do
     pipe_through :browser
 
@@ -27,6 +37,11 @@ defmodule UserxWeb.Router do
     post "/test", UserController, :test
     post "/sign_up", SessionController, :sign_up
     post "/sign_in", SessionController, :sign_in
+  end
+
+  scope "/auth/api", UserxWeb do
+    pipe_through [:api, :auth_member, :ensure_auth]
+    get "/test_auth", SessionController, :test_auth
   end
 
   # Enables LiveDashboard only for development
