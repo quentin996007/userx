@@ -54,7 +54,9 @@ defmodule Userx.MixProject do
       # 检测性能问题
       {:flame_on, "~> 0.3.0"},
       # 参数校验
-      {:tarams, "~> 1.2.1"}
+      {:tarams, "~> 1.2.1"},
+      # 验证
+      {:guardian, "~> 2.2.1"}
     ]
   end
 

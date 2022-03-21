@@ -47,6 +47,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# 配置 Guardian 验证
+config :userx, Honeypot.Auth.Guardian,
+  issuer: "userx",
+  # "Secret key. You can use `mix guardian.gen.secret` to get one"
+  secret_key: "bg8UAGqxvmw21g07wER53zzkOKjn1EsGNZwLfXwBgXzR0TAEgwovjh202C61/7WY"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

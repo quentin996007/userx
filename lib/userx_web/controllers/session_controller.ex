@@ -37,7 +37,9 @@ defmodule UserxWeb.SessionController do
         conn
         |> ResponseHandler.success(
           "登录成功",
-          UserxWeb.UserView.render("show.json", user: user)
+          Map.merge(UserxWeb.UserView.render("show.json", user: user), %{
+            jwt: Honeypot.Auth.Guardian.signin_jwt_for_member(user.id)
+          })
         )
 
       _ ->
