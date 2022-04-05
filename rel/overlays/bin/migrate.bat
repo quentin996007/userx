@@ -1,0 +1,1 @@
+call "%~dp0\userx" eval Userx.Release.migrate

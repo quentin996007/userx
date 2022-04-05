@@ -55,6 +55,8 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :userx, UserxWeb.Endpoint, server: true
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
