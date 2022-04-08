@@ -28,6 +28,7 @@ services:
       apt-get install -y inotify-tools &&
       cd /app &&
       mix ecto.create &&
+      mix ecto.migrate &&
       mix phx.server"
     volumes:
       - .:/app
