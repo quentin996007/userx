@@ -3,8 +3,10 @@ import Config
 # Configure your database
 config :userx, Userx.Repo,
   username: "postgres",
-  password: "quentin",
-  hostname: "localhost",
+  # password: "quentin",
+  # hostname: "localhost",
+  password: "postgres",
+  hostname: "postgresql",
   database: "userx_dev",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

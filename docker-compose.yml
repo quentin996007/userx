@@ -1,0 +1,37 @@
+version: '3'
+services:
+  postgresql:
+    image: postgres
+    container_name: mm2d-dev-postgresql
+    ports:
+      - "5433:5432"
+    networks:
+      - mm2d-dev-net
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  elixir:
+    image: elixir
+    container_name: mm2d-dev-elixir
+    stdin_open: true
+    tty: true
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgresql
+    networks:
+      - mm2d-dev-net
+    command: >      
+      bash -c "yes | mix local.hex &&
+      yes | mix archive.install hex phx_new &&
+      mix local.rebar --force &&
+      apt-get update -y &&
+      apt-get install -y inotify-tools &&
+      cd /app &&
+      mix ecto.create &&
+      mix phx.server"
+    volumes:
+      - .:/app
+
+networks:
+  mm2d-dev-net:
+    driver: bridge
