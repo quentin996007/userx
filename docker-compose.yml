@@ -10,7 +10,9 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
   elixir:
-    image: elixir
+    build: 
+      context: .
+      dockerfile: ElixirDockerfile
     container_name: mm2d-dev-elixir
     stdin_open: true
     tty: true
@@ -20,18 +22,13 @@ services:
       - postgresql
     networks:
       - mm2d-dev-net
-    command: >      
-      bash -c "yes | mix local.hex &&
-      yes | mix archive.install hex phx_new &&
-      mix local.rebar --force &&
-      apt-get update -y &&
-      apt-get install -y inotify-tools &&
-      cd /app &&
-      mix ecto.create &&
-      mix ecto.migrate &&
-      mix phx.server"
+    command: >
+      bash -c "mix ecto.create
+      && mix ecto.migrate
+      && mix phx.server"
     volumes:
       - .:/app
+    working_dir: /app
 
 networks:
   mm2d-dev-net:
